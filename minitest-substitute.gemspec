@@ -7,6 +7,10 @@ Gem::Specification.new do |spec|
   spec.version     = Minitest::Substitute::VERSION
   spec.summary     = 'Substitute values for the duration of a block or a group of tests'
   spec.description = <<~END
+    Simple Minitest helper to replace values such as an instance variable of an
+    object or an environment variable for the duration of a block or a group of
+    tests. This comes in very handy when you have to derive from default
+    configuration in order to test some aspects of your code.
   END
   spec.authors     = ['Sven Schwyn']
   spec.email       = ['ruby@bitcetera.com']
