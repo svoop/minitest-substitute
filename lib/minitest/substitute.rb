@@ -2,6 +2,7 @@
 
 require_relative 'substitute/version'
 
+require_relative 'substitute/substitutor'
 require_relative 'substitute/with'
 require_relative 'substitute/spec'
 

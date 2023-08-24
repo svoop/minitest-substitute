@@ -3,9 +3,6 @@
 require 'minitest/spec'
 
 Minitest::Spec::DSL.class_eval do
-  class Substitutor
-    include Minitest::Substitute::With
-  end
 
   # Substitute the variable value for the duration of the current description
   #
@@ -14,12 +11,13 @@ Minitest::Spec::DSL.class_eval do
   # @param on [Object, nil] substitute in the context of this object
   # @yield temporary substitution value (takes precedence over +substitute+ param)
   def with(variable, substitute=nil, on: self)
+    substitute = yield if block_given?
+    substitutor = Minitest::Substitute::Substitutor.new(variable, substitute, on: on)
     before do
-      substitute = yield if block_given?
-      Substitutor.send(:commit_substitution, variable, substitute, on: on)
+      substitutor.commit
     end
     after do
-      Substitutor.send(:rollback_substitution, variable, on: on)
+      substitutor.rollback
     end
   end
 
@@ -44,4 +42,5 @@ Minitest::Spec::DSL.class_eval do
       end
     end)  #.then &:include
   end
+
 end

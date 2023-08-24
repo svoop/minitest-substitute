@@ -5,6 +5,8 @@ class Config
     @version = 1
     @released_on = '2023-08-24'
   end
+
+  @@counter = 0
 end
 
 $_spec_config_instance = Config.new

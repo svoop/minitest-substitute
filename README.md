@@ -41,13 +41,6 @@ require 'minitest/substitute'
 
 ## Usage
 
-This lightweight gem implements features on a "as needed" basis, as of now:
-
-* substitution of instance variables
-* substitution of global variables
-
-Please [create an issue describing your use case](https://github.com/svoop/minitest-substitute/issues) in case you need more features such as the substitution of class variables or substitution via accessor methods.
-
 ### Block
 
 To substitute the value of an instance variable for the duration of a block:
@@ -59,11 +52,27 @@ class Config
   end
 end
 
-Config.instance_variable_get('@version')     # => 1
-with '@version', 2, on: Config do
-  Config.instance_variable_get('@version')   # => 2
+config = Config.new
+
+config.instance_variable_get('@version')     # => 1
+with '@version', 2, on: config do
+  config.instance_variable_get('@version')   # => 2
 end
-Config.instance_variable_get('@version')     # => 1
+config.instance_variable_get('@version')     # => 1
+```
+
+Class variables can be substituted as well:
+
+```ruby
+class Config
+  @@counter = 0
+end
+
+Config.class_variable_get('@@counter')     # => 0
+with '@@counter', 42, on: Config do
+  Config.class_variable_get('@@counter')   # => 42
+end
+Config.class_variable_get('@@counter')     # => 0
 ```
 
 Same goes for global variables:

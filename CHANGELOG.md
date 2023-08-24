@@ -1,6 +1,7 @@
 ## Main
 
-Nothing so far
+#### Additions
+* Refactor to support class variables as well
 
 ## 0.1.0
 

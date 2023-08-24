@@ -4,7 +4,7 @@ require_relative '../../../spec_helper'
 require_relative '../../../factory'
 
 describe :with do
-  10.times do   # test value reset even though order is random
+  10.times do   # test rollback even though order is random
     describe "instance variable" do
       context 'untouched' do
         it "returns the original value" do
@@ -22,7 +22,25 @@ describe :with do
     end
   end
 
-  10.times do   # test value reset even though order is random
+  10.times do   # test rollback even though order is random
+    describe "class variable" do
+      context 'untouched' do
+        it "returns the original value" do
+          _(Config.class_variable_get(:@@counter)).must_equal 0
+        end
+      end
+
+      context 'substituted' do
+        with '@@counter', 42, on: Config
+
+        it "returns the substitute value" do
+          _(Config.class_variable_get(:@@counter)).must_equal 42
+        end
+      end
+    end
+  end
+
+  10.times do   # test rollback even though order is random
     describe "global variable" do
       context 'untouched' do
         it "returns the original value" do
@@ -40,7 +58,7 @@ describe :with do
     end
   end
 
-  10.times do   # test value reset even though order is random
+  10.times do   # test rollback even though order is random
     describe "environment variable" do
       context 'untouched' do
         it "returns the original value" do
@@ -58,7 +76,7 @@ describe :with do
     end
   end
 
-  10.times do   # test value reset even though order is random
+  10.times do   # test rollback even though order is random
     describe "multiple substitutions" do
       context 'untouched' do
         it "returns the original values" do

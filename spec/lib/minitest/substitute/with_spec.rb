@@ -14,6 +14,16 @@ describe :with do
     end
   end
 
+  describe "class variable" do
+    it "substitutes the value for the duration of a block" do
+      _(Config.class_variable_get(:@@counter)).must_equal 0
+      with '@@counter', 42, on: Config do
+        _(Config.class_variable_get(:@@counter)).must_equal 42
+      end
+      _(Config.class_variable_get(:@@counter)).must_equal 0
+    end
+  end
+
   describe "global variable" do
     it "substitutes the value for the duration of a block" do
       _($_spec_global_variable).must_equal :original

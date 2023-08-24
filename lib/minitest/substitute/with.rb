@@ -3,10 +3,6 @@
 module Minitest
   module Substitute
     module With
-      @original = {}
-      class << self
-        attr_accessor :original
-      end
 
       # Substitute the variable value for the duration of the given block
       #
@@ -16,22 +12,13 @@ module Minitest
       # @yield block during which the substitution is made
       # @return [Object] return value of the yielded block
       def with(variable, substitute, on: self)
-        commit_substitution(variable, substitute, on: on)
+        substitutor = Minitest::Substitute::Substitutor.new(variable, substitute, on: on)
+        substitutor.commit
         yield.tap do
-          rollback_substitution(variable, on: on)
+          substitutor.rollback
         end
       end
 
-      private
-
-      def commit_substitution(variable, substitute, on:)
-        Minitest::Substitute::With.original[variable.hash] = on.instance_eval variable.to_s
-        on.instance_eval "#{variable} = substitute"
-      end
-
-      def rollback_substitution(variable, on:)
-        on.instance_eval "#{variable} = Minitest::Substitute::With.original.delete(variable.hash)"
-      end
     end
   end
 end
