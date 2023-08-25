@@ -61,6 +61,8 @@ end
 config.instance_variable_get('@version')     # => 1
 ```
 
+:warning: The target `on` is set explicitly in this case. If you omit this argument, `self` will be used as target by default.
+
 Class variables can be substituted as well:
 
 ```ruby
@@ -136,6 +138,8 @@ with '@version', on: Config do
   2
 end
 ```
+
+:warning: The target `on` is set explicitly in this case. If you omit this argument, `:subject` will be used as target by default which refers to the subject defined by the `subject {}` helper.
 
 It's safe to use multiple `with` statements within one `describe` block.
 

@@ -6,12 +6,14 @@ module Minitest
 
       EVAL_METHODS = [:instance_eval, :instance_eval, :class_eval].freeze
 
+      attr_writer :on
+
       def initialize(variable, substitute, on:)
         @variable, @substitute, @on = variable, substitute, on
-        @original = get
       end
 
       def commit
+        @original = get
         set @substitute
       end
 

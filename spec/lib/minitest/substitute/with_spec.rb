@@ -6,11 +6,12 @@ require_relative '../../../factory'
 describe :with do
   describe "instance variable" do
     it "substitutes the value for the duration of a block" do
-      _($_spec_config_instance.instance_variable_get(:@version)).must_equal 1
-      with '@version', 2, on: $_spec_config_instance do
-        _($_spec_config_instance.instance_variable_get(:@version)).must_equal 2
+      config = Config.new
+      _(config.instance_variable_get(:@version)).must_equal 1
+      with '@version', 2, on: config do
+        _(config.instance_variable_get(:@version)).must_equal 2
       end
-      _($_spec_config_instance.instance_variable_get(:@version)).must_equal 1
+      _(config.instance_variable_get(:@version)).must_equal 1
     end
   end
 
@@ -26,11 +27,11 @@ describe :with do
 
   describe "global variable" do
     it "substitutes the value for the duration of a block" do
-      _($_spec_global_variable).must_equal :original
-      with "$_spec_global_variable", 'oggy' do
-        _($_spec_global_variable).must_equal 'oggy'
+      _($spec_global_variable).must_equal :original
+      with "$spec_global_variable", 'oggy' do
+        _($spec_global_variable).must_equal 'oggy'
       end
-      _($_spec_global_variable).must_equal :original
+      _($spec_global_variable).must_equal :original
     end
   end
 
@@ -46,10 +47,11 @@ describe :with do
 
   describe "nested substitutions" do
     it "substitutes the values for the duration of a block" do
-      with '@version', 2, on: $_spec_config_instance do
-        with '@released_on', '2012-12-12', on: $_spec_config_instance do
-          _($_spec_config_instance.instance_variable_get(:@version)).must_equal 2
-          _($_spec_config_instance.instance_variable_get(:@released_on)).must_equal '2012-12-12'
+      config = Config.new
+      with '@version', 2, on: config do
+        with '@released_on', '2012-12-12', on: config do
+          _(config.instance_variable_get(:@version)).must_equal 2
+          _(config.instance_variable_get(:@released_on)).must_equal '2012-12-12'
         end
       end
     end

@@ -9,5 +9,4 @@ class Config
   @@counter = 0
 end
 
-$_spec_config_instance = Config.new
-$_spec_global_variable = :original
+$spec_global_variable = :original
