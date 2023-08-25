@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 0.2.0
+
 #### Additions
 * Refactor to support class variables as well
 * Use declared subject as default target for with helper
