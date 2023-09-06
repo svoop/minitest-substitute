@@ -111,7 +111,7 @@ describe :with do
     end
   end
 
-  #10.times do   # test rollback even though order is random
+  10.times do   # test rollback even though order is random
     describe "let helper value in with block" do
       subject do
         Config.new
@@ -129,5 +129,5 @@ describe :with do
         _(subject.instance_variable_get(:@released_on)).must_equal '2011-11-11'
       end
     end
-  #end
+  end
 end
