@@ -2,6 +2,10 @@
 
 Nothing so far
 
+## 0.2.1
+
+Nothing so far
+
 ## 0.2.0
 
 #### Additions
