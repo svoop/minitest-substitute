@@ -8,8 +8,13 @@ module Minitest
 
       attr_writer :on
 
-      def initialize(variable, substitute, on:)
-        @variable, @substitute, @on = variable, substitute, on
+      def initialize(variable, on:)
+        @variable, @on = variable, on
+      end
+
+      def substitute(value)
+        @substitute = value unless instance_variable_defined? :@substitute
+        self
       end
 
       def commit

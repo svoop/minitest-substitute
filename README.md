@@ -131,15 +131,45 @@ describe Config do
 end
 ```
 
-For consistency with other Minitest helpers, the following alternative does exactly the same:
+:warning: The target `on` is set explicitly in this case. If you omit this argument, `:subject` will be used as target by default which refers to the subject defined by the `subject {}` helper.
+
+Alternatively, you can pass the substitution value as a block. This block will be evaluated once in the context of the test, in other words, you can use assignments done with `let` inside the block:
 
 ```ruby
-with '@version', on: Config do
-  2
+class Config
+  def initialize
+    @version = 1
+  end
+end
+
+describe Config do
+  subject do
+    Config.new
+  end
+
+  let :version do
+    2
+  end
+
+  describe 'original version' do
+    it "returns the original version" do
+      _(subject.instance_variable_get('@version')).must_equal 1
+    end
+  end
+
+  describe 'sustituted version' do
+    with '@version', on: Config do
+      version   # set using "let" above
+    end
+
+    it "returns the substituted version" do
+      _(subject.instance_variable_get('@version')).must_equal 2
+    end
+  end
 end
 ```
 
-:warning: The target `on` is set explicitly in this case. If you omit this argument, `:subject` will be used as target by default which refers to the subject defined by the `subject {}` helper.
+If both a substitution value and a substitution block are present, the latter takes precedence.
 
 It's safe to use multiple `with` statements within one `describe` block.
 

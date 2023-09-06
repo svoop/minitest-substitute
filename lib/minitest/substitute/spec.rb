@@ -11,10 +11,10 @@ Minitest::Spec::DSL.class_eval do
   # @param on [Object, Symbol, nil] substitute in the context of this object
   #   or in the context of the declared subject if +:subject+ is set
   # @yield temporary substitution value (takes precedence over +substitute+ param)
-  def with(variable, substitute=nil, on: :subject)
-    substitute = yield if block_given?
-    substitutor = Minitest::Substitute::Substitutor.new(variable, substitute, on: on)
+  def with(variable, substitute=nil, on: :subject, &block)
+    substitutor = Minitest::Substitute::Substitutor.new(variable, on: on)
     before do
+      substitutor.substitute(block ? instance_eval(&block) : substitute)
       substitutor.on = subject if on == :subject && respond_to?(:subject)
       substitutor.commit
     end

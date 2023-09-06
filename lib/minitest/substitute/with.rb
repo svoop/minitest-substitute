@@ -12,7 +12,7 @@ module Minitest
       # @yield block during which the substitution is made
       # @return [Object] return value of the yielded block
       def with(variable, substitute, on: self)
-        substitutor = Minitest::Substitute::Substitutor.new(variable, substitute, on: on)
+        substitutor = Minitest::Substitute::Substitutor.new(variable, on: on).substitute(substitute)
         substitutor.commit
         yield.tap do
           substitutor.rollback
