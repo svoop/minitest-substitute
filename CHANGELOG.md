@@ -4,7 +4,8 @@ Nothing so far
 
 ## 0.2.1
 
-Nothing so far
+#### Changes
+* Defer evaluation of the substitution value block for specs
 
 ## 0.2.0
 
