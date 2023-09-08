@@ -9,4 +9,20 @@ class Config
   @@counter = 0
 end
 
+module Dog
+  def self.makes
+    'woof'
+  end
+end
+
+module Cat
+  def self.makes
+    'meow'
+  end
+end
+
+module Plane
+  TYPES = ['Glider'].freeze
+end
+
 $spec_global_variable = :original

@@ -87,7 +87,7 @@ end
 $verbose           # => false
 ```
 
-And it works for hashes as well which comes in handy when you have to temporarily override the value of an environment variable:
+And it works for globals like `ENV` as well which comes in handy when you have to temporarily override the value of an environment variable:
 
 ```ruby
 ENV['EDITOR']     # => 'vi'
@@ -95,6 +95,43 @@ with "ENV['EDITOR']", 'nano' do
   ENV['EDITOR']   # => 'nano'
 end
 ENV['EDITOR']     # => 'vi'
+```
+
+You can even substitute constants, however, you have to use their absolute name starting with `::`:
+
+```ruby
+module Animals
+  DOG_MAKES = 'woof'
+  CAT_MAKES = 'meow'
+end
+
+Animals::DOG_MAKES     # => 'woof'
+with '::Animals::DOG_MAKES', Animals::CAT_MAKES do
+  Animals::DOG_MAKES   # => 'meow'
+end
+Animals::DOG_MAKES     # => 'woof'
+```
+
+Remember that class declarations are assigned to constants as well:
+
+```ruby
+class Dog
+  self.makes
+    'woof'
+  end
+end
+
+class Cat
+  self.makes
+    'meow'
+  end
+end
+
+Dog.makes     # => 'woof'
+with '::Dog', Cat do
+  Dog.makes   # => 'meow'
+end
+Dog.makes     # => 'woof'
 ```
 
 It's safe to nest multiple `with` statements.

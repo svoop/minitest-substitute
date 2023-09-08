@@ -4,12 +4,10 @@ module Minitest
   module Substitute
     class Substitutor
 
-      EVAL_METHODS = [:instance_eval, :instance_eval, :class_eval].freeze
-
       attr_writer :on
 
-      def initialize(variable, on:)
-        @variable, @on = variable, on
+      def initialize(target, on:)
+        @target, @on = target, on
       end
 
       def substitute(value)
@@ -28,16 +26,32 @@ module Minitest
 
       private
 
-      def eval_method
-        EVAL_METHODS[@variable.count('@')]
-      end
-
       def get
-        @on.send(eval_method, @variable.to_s)
+        case @target
+        when /^@@/   # class variable
+          @on.class_eval @target.to_s
+        else   # constant, instance or global variable
+          @on.instance_eval @target.to_s
+        end
       end
 
       def set(value)
-        @on.send(eval_method, "#{@variable} = value")
+        case @target
+        when /^::/
+          remove_const @target
+          eval "#{@target} = value"
+        when /^@@/   # class variable
+          @on.class_eval "#{@target} = value"
+        else    # instance or global variable
+          @on.instance_eval "#{@target} = value"
+        end
+      end
+
+      # Remove constant without warning
+      def remove_const(const)
+        namespace, _, name = const.rpartition('::')
+        receiver = namespace == '' ? Object : Object.const_get(namespace)
+        receiver.send(:remove_const, name)
       end
 
     end
