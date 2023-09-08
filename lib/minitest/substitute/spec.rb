@@ -29,7 +29,7 @@ Minitest::Spec::DSL.class_eval do
     include(Module.new do
       define_method(:setup) do
         super()
-        instance_eval &block
+        instance_eval(&block)
       end
     end) # .then &:include
   end
@@ -38,7 +38,7 @@ Minitest::Spec::DSL.class_eval do
   def after(_type=nil, &block)
     include(Module.new do
       define_method(:teardown) do
-        instance_eval &block
+        instance_eval(&block)
       ensure
         super()
       end
