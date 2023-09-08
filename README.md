@@ -18,7 +18,7 @@ This comes in very handy when you have to derive from default configuration in o
 This gem is [cryptographically signed](https://guides.rubygems.org/security/#using-gems) in order to assure it hasn't been tampered with. Unless already done, please add the author's public key as a trusted certificate now:
 
 ```
-gem cert --add <(curl -Ls https://raw.github.com/svoop/minitest-substitute/main/certs/svoop.pem)
+gem cert --add <(curl -Ls https://bitcetera.com/downloads/gem-public_cert.pem)
 ```
 
 Add the following to the <tt>Gemfile</tt> or <tt>gems.rb</tt> of your [Bundler](https://bundler.io) powered Ruby project:
