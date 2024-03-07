@@ -39,6 +39,24 @@ Finally, require this gem in your `test_helper.rb` or `spec_helper.rb`:
 require 'minitest/substitute'
 ```
 
+## Update from 0.x.x to 1.x.x
+
+Rails 7 has polluted `Object` for everybody by introducing `Object#with`. To prevent collisions, Minitest::Substitute has switched from `with` to `substitute` as of version 1.0.0.
+
+After having updated this gem, you'll have to adapt all your tests accordingly:
+
+```ruby
+# Version 0.x.x
+with '@version', 2, on: config do
+  config.instance_variable_get('@version')   # => 2
+end
+
+# Version 1.x.x
+substitute '@version', 2, on: config do
+  config.instance_variable_get('@version')   # => 2
+end
+```
+
 ## Usage
 
 ### Block
@@ -55,7 +73,7 @@ end
 config = Config.new
 
 config.instance_variable_get('@version')     # => 1
-with '@version', 2, on: config do
+substitute '@version', 2, on: config do
   config.instance_variable_get('@version')   # => 2
 end
 config.instance_variable_get('@version')     # => 1
@@ -71,7 +89,7 @@ class Config
 end
 
 Config.class_variable_get('@@counter')     # => 0
-with '@@counter', 42, on: Config do
+substitute '@@counter', 42, on: Config do
   Config.class_variable_get('@@counter')   # => 42
 end
 Config.class_variable_get('@@counter')     # => 0
@@ -81,7 +99,7 @@ Same goes for global variables:
 
 ```ruby
 $verbose = false   # => false
-with '$verbose', true do
+substitute '$verbose', true do
   $verbose         # => true
 end
 $verbose           # => false
@@ -91,7 +109,7 @@ And it works for globals like `ENV` as well which comes in handy when you have t
 
 ```ruby
 ENV['EDITOR']     # => 'vi'
-with "ENV['EDITOR']", 'nano' do
+substitute "ENV['EDITOR']", 'nano' do
   ENV['EDITOR']   # => 'nano'
 end
 ENV['EDITOR']     # => 'vi'
@@ -106,7 +124,7 @@ module Animals
 end
 
 Animals::DOG_MAKES     # => 'woof'
-with '::Animals::DOG_MAKES', Animals::CAT_MAKES do
+substitute '::Animals::DOG_MAKES', Animals::CAT_MAKES do
   Animals::DOG_MAKES   # => 'meow'
 end
 Animals::DOG_MAKES     # => 'woof'
@@ -128,13 +146,13 @@ class Cat
 end
 
 Dog.makes     # => 'woof'
-with '::Dog', Cat do
+substitute '::Dog', Cat do
   Dog.makes   # => 'meow'
 end
 Dog.makes     # => 'woof'
 ```
 
-It's safe to nest multiple `with` statements.
+It's safe to nest multiple `substitute` statements.
 
 ### Group of Tests
 
@@ -159,7 +177,7 @@ describe Config do
   end
 
   describe 'sustituted version' do
-    with '@version', 2, on: Config
+    substitute '@version', 2, on: Config
 
     it "returns the substituted version" do
       _(subject.instance_variable_get('@version')).must_equal 2
@@ -195,7 +213,7 @@ describe Config do
   end
 
   describe 'sustituted version' do
-    with '@version', on: Config do
+    substitute '@version', on: Config do
       version   # set using "let" above
     end
 
@@ -208,7 +226,7 @@ end
 
 If both a substitution value and a substitution block are present, the latter takes precedence.
 
-It's safe to use multiple `with` statements within one `describe` block.
+It's safe to use multiple `substitute` statements within one `describe` block.
 
 (The spec integration is borrowed from [minitest-around](https://rubygems.org/gems/minitest-around) for elegance and compatibility.)
 

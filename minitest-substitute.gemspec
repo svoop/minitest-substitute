@@ -49,4 +49,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-minitest'
   spec.add_development_dependency 'yard'
-end
+
+  spec.post_install_message = '⚠️ Breaking change: minitest-substitute >= 1.0.0 switched from "with" to "substitute" to prevent conflicts with Rails 7. Please read the update section in the README.'
+ end

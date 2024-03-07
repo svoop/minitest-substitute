@@ -5,7 +5,7 @@ require_relative '../../../factory'
 
 describe Minitest::Spec::DSL do
 
-  describe :with do
+  describe :substitute do
     10.times do   # test rollback even though order is random
       describe "class declaring constant" do
         context 'untouched' do
@@ -15,7 +15,7 @@ describe Minitest::Spec::DSL do
         end
 
         context 'substituted' do
-          with '::Dog', Cat
+          substitute '::Dog', Cat
 
           it "returns the substitute value" do
             _(Dog.makes).must_equal 'meow'
@@ -33,7 +33,7 @@ describe Minitest::Spec::DSL do
         end
 
         context 'substituted' do
-          with 'Plane::TYPES', ['Piston', 'Jet']
+          substitute 'Plane::TYPES', ['Piston', 'Jet']
 
           it "returns the substitute value" do
             _(Plane::TYPES).must_equal ['Piston', 'Jet']
@@ -55,7 +55,7 @@ describe Minitest::Spec::DSL do
         end
 
         context 'substituted' do
-          with '@version', 2
+          substitute '@version', 2
 
           it "returns the substitute value" do
             _(subject.instance_variable_get(:@version)).must_equal 2
@@ -77,7 +77,7 @@ describe Minitest::Spec::DSL do
         end
 
         context 'substituted' do
-          with '@@counter', 42
+          substitute '@@counter', 42
 
           it "returns the substitute value" do
             _(Config.class_variable_get(:@@counter)).must_equal 42
@@ -95,7 +95,7 @@ describe Minitest::Spec::DSL do
         end
 
         context 'substituted' do
-          with "$spec_global_variable", 'oggy'
+          substitute "$spec_global_variable", 'oggy'
 
           it "returns the substitute value" do
             _($spec_global_variable).must_equal 'oggy'
@@ -113,7 +113,7 @@ describe Minitest::Spec::DSL do
         end
 
         context 'substituted' do
-          with "ENV['WITH_SPEC_ENV_VAR']", 'foobar'
+          substitute "ENV['WITH_SPEC_ENV_VAR']", 'foobar'
 
           it "returns the substitute value" do
             _(ENV['WITH_SPEC_ENV_VAR']).must_equal 'foobar'
@@ -136,8 +136,8 @@ describe Minitest::Spec::DSL do
         end
 
         context 'substituted' do
-          with '@version', 2
-          with '@released_on' do
+          substitute '@version', 2
+          substitute '@released_on' do
             '2012-12-12'
           end
 
@@ -150,7 +150,7 @@ describe Minitest::Spec::DSL do
     end
 
     10.times do   # test rollback even though order is random
-      describe "let helper value in with block" do
+      describe "let helper value in substitute block" do
         subject do
           Config.new
         end
@@ -159,7 +159,7 @@ describe Minitest::Spec::DSL do
           '2011-11-11'
         end
 
-        with '@released_on' do
+        substitute '@released_on' do
           release_date
         end
 

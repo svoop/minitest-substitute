@@ -3,7 +3,7 @@
 require_relative 'substitute/version'
 
 require_relative 'substitute/substitutor'
-require_relative 'substitute/with'
+require_relative 'substitute/substitute'
 require_relative 'substitute/spec'
 
-include Minitest::Substitute::With
+include Minitest::Substitute::Substitute

@@ -1,6 +1,8 @@
 ## Main
 
-Nothing so far
+#### Breaking Changes
+* Switch from `with` to `substitute` because Rails 7 pollutes `Object` for
+  everybody by introducing `Object#with`. 💣
 
 ## 0.3.0
 

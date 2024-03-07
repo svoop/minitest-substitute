@@ -2,7 +2,7 @@
 
 module Minitest
   module Substitute
-    module With
+    module Substitute
 
       # Substitute the variable value for the duration of the given block
       #
@@ -11,7 +11,7 @@ module Minitest
       # @param on [Object, nil] substitute in the context of this object
       # @yield block during which the substitution is made
       # @return [Object] return value of the yielded block
-      def with(variable, substitute, on: self)
+      def substitute(variable, substitute, on: self)
         substitutor = Minitest::Substitute::Substitutor.new(variable, on: on).substitute(substitute)
         substitutor.commit
         yield.tap do
