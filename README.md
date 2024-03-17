@@ -7,7 +7,7 @@
 
 Simple Minitest helper to replace values such as an instance variable of an object or an environment variable for the duration of a block or a group of tests.
 
-This comes in very handy when you have to derive from default configuration in order to test some aspects of your code.
+This comes in very handy when you have to deviate from default configuration in order to test some aspects of your code.
 
 * [Homepage](https://github.com/svoop/minitest-substitute)
 * [API](https://www.rubydoc.info/gems/minitest-substitute)
