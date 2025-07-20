@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 1.1.0
+
 ### Changes
 * Update Ruby to 3.4
 * Add action for trusted release
