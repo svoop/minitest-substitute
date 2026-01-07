@@ -8,8 +8,6 @@ require 'debug'
 require 'minitest/autorun'
 require Pathname(__dir__).join('..', 'lib', 'minitest', 'substitute')
 
-require 'minitest/focus'
-
 class Minitest::Spec
   class << self
     alias_method :context, :describe
