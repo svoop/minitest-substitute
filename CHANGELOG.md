@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 1.1.2
+
 ### Additions
 * Works with both Minitest 5 and 6
 
