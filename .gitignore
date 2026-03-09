@@ -1,14 +1,12 @@
 # macOS
 .DS_Store
 
-# direnv
-.direnv
-.envrc
+# mise
+.mise.local.toml
 
 # Editors
-.nova
+.zed
 .vscode
-*.sublime*
 
 # Ruby
 gems.locked
