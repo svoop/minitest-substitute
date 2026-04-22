@@ -22,7 +22,8 @@ Gem::Specification.new do |spec|
     'changelog_uri'     => 'https://github.com/svoop/minitest-substitute/blob/main/CHANGELOG.md',
     'source_code_uri'   => 'https://github.com/svoop/minitest-substitute',
     'documentation_uri' => 'https://www.rubydoc.info/gems/minitest-substitute',
-    'bug_tracker_uri'   => 'https://github.com/svoop/minitest-substitute/issues'
+    'bug_tracker_uri'   => 'https://github.com/svoop/minitest-substitute/issues',
+    'rubygems_mfa_required' => 'true'
   }
 
   spec.files         = Dir['lib/**/*']
