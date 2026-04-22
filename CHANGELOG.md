@@ -1,5 +1,9 @@
 ## Main
 
+Nothing so far
+
+## 1.2.0
+
 ### Improvements
 * Add Minitest plugin to make explicit require in helper obsolete
 * Enforce MFA for future gem releases
