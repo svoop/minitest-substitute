@@ -29,12 +29,6 @@ And then install the bundle:
 bundle install
 ```
 
-Finally, require this gem in your `test_helper.rb` or `spec_helper.rb`:
-
-```ruby
-require 'minitest/substitute'
-```
-
 ## Update from 0.x.x to 1.x.x
 
 Rails 7 has polluted `Object` for everybody by introducing `Object#with`. To prevent collisions, Minitest::Substitute has switched from `with` to `substitute` as of version 1.0.0.
